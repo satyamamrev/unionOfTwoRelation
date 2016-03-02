@@ -67,8 +67,8 @@ public class generator {
 	
 					switch(attributes.get(j))
 					{
-						case "char" :	StringBuilder dataset=new StringBuilder("AaXbBcdqwefAgwertQAhisjkWfSlmsnoEDp3q1rR9Dst6Quv3E4wx2Cyz1XABDCdDFDEeFGoHiIJuKLyMNtOPrQeRSwTaUVqwwerWNCXYZ");
-										int x=rndm.nextInt(85);
+						case "char" :	StringBuilder dataset=new StringBuilder("AaAXbBcdqw13efAgwertQAhisjkWfSlmasnoEDp3sq1rR9Dst6Quv3E4wxABERTY2Cyz1XABadftqwDCdDFDEeFGoHiIJuKLyMNtOPrQeRSwTaqwyuiABVCE123qwwerWNCXYZ");
+										int x=rndm.nextInt(105);
 									 	record.append(dataset.substring(x,x+10));
 									 	//count+=record.length();
 										break;
@@ -95,7 +95,6 @@ public class generator {
 					j++;
 					
 				}
-				
 				
 				records.add(i,record.toString());
 				
