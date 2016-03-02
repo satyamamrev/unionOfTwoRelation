@@ -2,64 +2,70 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 
 public class generator {
-
-	/**
-	 * @param args
-	 * @throws IOException 
-	 */
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+	
+	ArrayList<String> attributes = new ArrayList<String>();
+	ArrayList<String> records = new ArrayList<String>();
+	
+	// function used to generate tables 
+	public void generateTables(String tableName1,String tableName2,long Table1Size,long Table2Size,long n,long duplicatn) throws IOException
+	{
+		generateAttribute(n);		// generate 'n' number of attributes 
+		generateTable(tableName1, Table1Size, duplicatn); // generate first table
+		generateTable(tableName2, Table2Size, duplicatn); // generate second table
 		
-		long n,r=10,size_of_file=250000000,line=0;
-		Random rndm=new Random();
-		ArrayList<String> attribute= new ArrayList<String>();
-		ArrayList<String> records = new ArrayList<String>();
-		Scanner sc= new Scanner(System.in);
-		n=sc.nextInt();
+		
+		
+	}
+	
+	// function used to generate attributes 
+	public void generateAttribute(long n)
+	{
+		Random rndm= new Random();
 		int i=0;
-		
-		// to generate the n number of attribute
-		long startTime = System.currentTimeMillis();
-
 		while(i<n)
 		{
 			int random=rndm.nextInt(3);
 			switch(random)
 			{
-				case 0 :attribute.add(i,"char");
+				case 0 :attributes.add(i,"char");
 						break;
 						
-				case 1 :attribute.add(i, "date");
+				case 1 :attributes.add(i, "date");
 						break;
 						
-				case 2 :attribute.add(i, "int");
+				case 2 :attributes.add(i, "int");
 						break;
+						
 			}
 			i++;
 		}
+	}
+	
+	// function used to generate single table
+	
+	public void generateTable(String tablename,long sizeOfFile,long r) throws IOException
+	{
+		FileWriter writer=new FileWriter(new File(tablename)); // filewriter for entering record into file
+		Random rndm=new Random();
+		long count=0;
 		
-		FileWriter writer=new FileWriter(new File("test.txt"));  // filewriter for entering record into file
-				
-		long count=0;   // to keep track of size of file
-		
-		while(count<size_of_file)
+		while(count<sizeOfFile)
 		{
-			i=0;
+			int i=0;
 			while(i<100)
 			{
 			
 				StringBuilder record=new StringBuilder();
 				int j=0;
-				while(j<n)
+				int len=attributes.size();
+				while(j<len)
 				{
 	
-					switch(attribute.get(j))
+					switch(attributes.get(j))
 					{
 						case "char" :	StringBuilder dataset=new StringBuilder("AaXbBcdqwefAgwertQAhisjkWfSlmsnoEDp3q1rR9Dst6Quv3E4wx2Cyz1XABDCdDFDEeFGoHiIJuKLyMNtOPrQeRSwTaUVqwwerWNCXYZ");
 										int x=rndm.nextInt(85);
@@ -73,11 +79,12 @@ public class generator {
 										record.append('/');
 										record.append(rndm.nextInt(999)+2000);
 										break;
+										
 						case "int" :	record.append(rndm.nextInt(1000000)+923102034); 	
 							
 										break;
 					}
-					if(j+1!=n)
+					if(j+1!=len)
 					{
 						record.append(',');
 					}
@@ -91,9 +98,7 @@ public class generator {
 				
 				
 				records.add(i,record.toString());
-				System.out.println("Adding line : "+line);
 				
-				line++;
 				writer.write(record.toString());
 				count+=record.length();
 				i++;
@@ -106,17 +111,14 @@ public class generator {
 				String dup=records.get(rndm.nextInt(100));
 				count+=dup.length();
 				writer.write(dup);
-				System.out.println("Adding line : "+line);
-				line++;
+				
 			}
 			records.clear();
 		}
 		writer.flush(); 
 		writer.close();
-			
-		long stopTime = System.currentTimeMillis();
-	      long elapsedTime = stopTime - startTime;
-	      System.out.println(elapsedTime);
+		
+		
 	}
 
 }
